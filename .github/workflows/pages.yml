@@ -14,13 +14,16 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: 安装项目依赖（包含hexo）
         run: npm install
 
-      - name: Build Hexo
-        run: npx hexo generate
+      - name: 全局安装hexo-cli
+        run: npm install -g hexo-cli
 
-      - name: Upload artifact
+      - name: 生成静态网页
+        run: hexo generate
+
+      - name: 上传网页产物
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
@@ -35,6 +38,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 部署Pages
         id: deployment
         uses: actions/deploy-pages@v4
